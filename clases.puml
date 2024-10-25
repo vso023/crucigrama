@@ -1,0 +1,40 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+' Clases del sistema
+class Matriz {
+    - matriz: list<list<str>>
+    + __init__(N: int)
+    + imprimir(): void
+    + colocar_palabra(palabra: str, fila: int, col: int, orientacion: str): void
+    + se_puede_colocar(palabra: str, fila: int, col: int, orientacion: str): bool
+}
+
+class Crucigrama {
+    - matriz: Matriz
+    + __init__(N: int)
+    + encontrar_posiciones_conectadas(palabra: str): list<tuple>
+    + colocar_palabra_conectada(palabra: str): bool
+    + generar(palabras: list<str>): void
+}
+
+class Utilidades {
+    + read_dict_from_txt(file_path: str): dict
+    + select_random_words(dictionary: dict, amount: int): list<tuple>
+    + mostrar_significados(palabras_seleccionadas: list<tuple>): void
+}
+
+' Relación entre las clases
+Crucigrama --> Matriz : usa
+main.py ..> Crucigrama : instancia
+main.py ..> Utilidades : usa
+
+' Representación del archivo principal
+object main.py {
+    file_path: str
+    dictionary: dict
+    selected_words: list<tuple>
+    palabras_para_crucigrama: list<str>
+}
+
+@enduml
